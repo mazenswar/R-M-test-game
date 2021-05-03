@@ -1,0 +1,115 @@
+.player-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 200px;
+  width: 300px;
+  img {
+    width: 35%;
+    border-radius: 100%;
+  }
+}
+
+.home-player {
+  border: 1px solid red;
+}
+.away-player {
+  border: 1px solid blue;
+}
+.away-team-div {
+}
+#home-team-div {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+.team {
+  display: flex;
+  //   flex-wrap: wrap;
+  width: 100%;
+  //   .position {
+  //     // border: 1px solid red;
+  //     width: 33%;
+  //     height: 33%;
+  //   }
+}
+
+.team-sheet {
+  //   background-color: green;
+  display: flex;
+  flex-direction: column;
+  grid-column: 2;
+}
+.grid {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  //   align-items: stretch;
+  background-color: green;
+  width: 100%;
+  height: 700px;
+  .line {
+    display: flex;
+    justify-content: space-evenly;
+    height: 33.3%;
+    width: 1fr;
+    border: 1px solid red;
+    .position {
+      border: 1px solid purple;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  // D
+  .defense {
+    .defense-left {
+    }
+    .defense-middle {
+    }
+    .defense-right {
+    }
+  }
+  // Mid
+  .midfield {
+    .midfield-left {
+    }
+    .midfield-middle {
+    }
+    .midfield-right {
+    }
+  }
+  //Att
+  .attack {
+    .attack-left {
+    }
+    .attack-middle {
+    }
+    .attack-right {
+    }
+  }
+}
+
+// <div>
+//       <div className="team-sheet">{renderSheet()}</div>
+//       <div className="grid">
+//         <div className="defense">
+//           <div className="defense-left"></div>
+//           <div className="defense-middle"></div>
+//           <div className="defense-right"></div>
+//         </div>
+//         <div className="midfield">
+//           <div className="midfield-left"></div>
+//           <div className="midfield-middle"></div>
+//           <div className="midfield-right"></div>
+//         </div>
+//         <div className="attack">
+//           <div className="attack-left"></div>
+//           <div className="attack-middle"></div>
+//           <div className="attack-right"></div>
+//         </div>
+//       </div>
+//     </div>
