@@ -41,7 +41,7 @@ export default function App() {
   useEffect(() => {
     fetchChars();
   }, []);
-  console.log(awayTeam);
+
   return (
     <div>
       <div className="team" id="home-team-div">
