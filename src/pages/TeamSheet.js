@@ -1,18 +1,32 @@
-import React, { createRef, useEffect, useState } from 'react';
+import React, { createRef, useEffect, useReducer, useState } from 'react';
+import Formation from './Formation';
 import PlayerCard from './PlayerCard';
 function reducer(state, { type, payload }) {
   switch (type) {
     case 'ADD_PLAYER':
-      return;
-    case 'MOVE_PLAYER':
-      return;
+      return addPlayer();
     default:
       return state;
+  }
+  function addPlayer() {
+    const arr = payload.position.split(/(?=[A-Z])/);
+    const line = arr[0];
+    const position = arr[1].toLocaleLowerCase();
+    return {
+      ...state,
+      [line]: { ...state[line], [position]: payload.id },
+    };
   }
 }
 
 export default function TeamSheet({ team, cssClass }) {
-  const matrix = [];
+  // const [team, setTeam] = useState([]);
+  const [selection, setSelection] = useState(true);
+  const [state, dispatch] = useReducer(reducer, {
+    defense: { left: null, middle: null, right: null },
+    midfield: { left: null, middle: null, right: null },
+    attack: { left: null, middle: null, right: null },
+  });
   const gridRef = createRef();
   const refs = {
     defenseLeftRef: createRef(),
@@ -45,10 +59,12 @@ export default function TeamSheet({ team, cssClass }) {
 
   ///////
   function handleMove(e) {
-    const xPoint = e.target.getBoundingClientRect().x;
-    const yPoint = e.target.getBoundingClientRect().y;
-
-    let chosenPosition = null;
+    let xPoint = e.target.getBoundingClientRect().x;
+    let yPoint = e.target.getBoundingClientRect().y;
+    let target = e.target.className === '' ? e.target.parentElement : e.target;
+    const marker = target.lastElementChild.getBoundingClientRect();
+    xPoint = marker.x;
+    yPoint = marker.y;
     for (let key in ranges) {
       let positionX = ranges[key].x;
       let rangeXend = ranges[key].x + ranges[key].width;
@@ -60,11 +76,22 @@ export default function TeamSheet({ team, cssClass }) {
         yPoint > positionY &&
         yPoint < rangeYend
       ) {
-        chosenPosition = { [key]: ranges[key] };
+        console.log('key', key);
+        let x = e.target.className.includes('player')
+          ? e.target
+          : e.target.parentElement;
+        const payload = { position: key, id: x.id };
+        dispatch({
+          type: 'ADD_PLAYER',
+          payload,
+        });
       }
-      let x = [key][0] + 'Ref';
-      console.log('XXXXX', refs[x]);
-      debugger;
+
+      // if (x) {
+
+      //   refs[x].current.innerHTML = '';
+      //   refs[x].current.appendChild(e.target);
+      // }
     }
     return 0;
   }
@@ -81,56 +108,68 @@ export default function TeamSheet({ team, cssClass }) {
     });
   }
   useEffect(() => {
-    let num = document.getElementsByClassName('defense');
-    console.log(num[0]);
     setRanges(makeRanges());
     // makeRanges();
   }, []);
 
   function submitTeam() {
     // if()
+    console.log(state);
+    setSelection(false);
   }
-  return (
-    <>
-      <div className="team-sheet">{renderSheet()}</div>
-      <div className="grid" ref={gridRef}>
-        <div className="defense line">
-          <div ref={refs.defenseLeftRef} className="defense-left position">
-            Defense-Left
+
+  console.log(state);
+  if (selection) {
+    return (
+      <>
+        <div className="team-sheet">{renderSheet()}</div>
+        <button onClick={submitTeam}>Submit Team</button>
+        <div className="grid" ref={gridRef}>
+          <div className="defense line">
+            <div ref={refs.defenseLeftRef} className="defense-left position">
+              Defense-Left
+            </div>
+            <div
+              ref={refs.defenseMiddleRef}
+              className="defense-middle position"
+            >
+              Defense-Middle
+            </div>
+            <div ref={refs.defenseRightRef} className="defense-right position">
+              Defense-Right
+            </div>
           </div>
-          <div ref={refs.defenseMiddleRef} className="defense-middle position">
-            Defense-Middle
+          <div className="midfield line">
+            <div ref={refs.midfieldLeftRef} className="midfield-left position">
+              Mid-Left
+            </div>
+            <div
+              ref={refs.midfieldMiddleRef}
+              className="midfield-middle position"
+            >
+              Mid-Middle
+            </div>
+            <div
+              ref={refs.midfieldRightRef}
+              className="midfield-right position"
+            >
+              Mid-Right
+            </div>
           </div>
-          <div ref={refs.defenseRightRef} className="defense-right position">
-            Defense-Right
+          <div className="attack line">
+            <div ref={refs.attackLeftRef} className="attack-left position">
+              Attack-Left
+            </div>
+            <div ref={refs.attackMiddleRef} className="attack-middle position">
+              Attack-Middle
+            </div>
+            <div ref={refs.attackRightRef} className="attack-right position">
+              Attack-Right
+            </div>
           </div>
         </div>
-        <div className="midfield line">
-          <div ref={refs.midfieldLeftRef} className="midfield-left position">
-            Mid-Left
-          </div>
-          <div
-            ref={refs.midfieldMiddleRef}
-            className="midfield-middle position"
-          >
-            Mid-Middle
-          </div>
-          <div ref={refs.midfieldRightRef} className="midfield-right position">
-            Mid-Right
-          </div>
-        </div>
-        <div className="attack line">
-          <div ref={refs.attackLeftRef} className="attack-left position">
-            Attack-Left
-          </div>
-          <div ref={refs.attackMiddleRef} className="attack-middle position">
-            Attack-Middle
-          </div>
-          <div ref={refs.attackRightRef} className="attack-right position">
-            Attack-Right
-          </div>
-        </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
+  return <Formation team={state} teamArr={team} />;
 }
