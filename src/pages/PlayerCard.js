@@ -8,7 +8,7 @@ export default function PlayerCard({ cssClass, player, handleMove }) {
   // }
   return (
     <Draggable onStop={handleMove}>
-      <div className={`player-card ${cssClass}`} id={player.name}>
+      <div className={`player-card ${cssClass}`} id={player.id}>
         <img src={player.image} alt={player.name} />
         <h5>{player.name}</h5>
         <div

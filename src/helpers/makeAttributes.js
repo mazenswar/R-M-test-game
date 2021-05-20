@@ -65,7 +65,7 @@ function makeAttributes(player) {
     attack: generateAttackValue(player),
     defense: generateDefenseValue(player),
   };
-  console.log(attr);
+
   return attr;
 }
 

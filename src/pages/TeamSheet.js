@@ -1,32 +1,19 @@
-import React, { createRef, useEffect, useReducer, useState } from 'react';
+import React, { useContext, createRef, useEffect, useState } from 'react';
 import Formation from './Formation';
 import PlayerCard from './PlayerCard';
-function reducer(state, { type, payload }) {
-  switch (type) {
-    case 'ADD_PLAYER':
-      return addPlayer();
-    default:
-      return state;
-  }
-  function addPlayer() {
-    const arr = payload.position.split(/(?=[A-Z])/);
-    const line = arr[0];
-    const position = arr[1].toLocaleLowerCase();
-    return {
-      ...state,
-      [line]: { ...state[line], [position]: payload.id },
-    };
-  }
-}
+import { Context as HomeTeamContext } from '../context/HomeTeamContext';
+import { Context as AwayTeamContext } from '../context/AwayTeamContext';
+import Play from './Play';
 
-export default function TeamSheet({ team, cssClass }) {
-  // const [team, setTeam] = useState([]);
+export default function TeamSheet({ ground }) {
+  const cssClass = ground === 'Home' ? 'home-player' : 'away-player';
+  const TeamContext = ground === 'Home' ? HomeTeamContext : AwayTeamContext;
+  const {
+    state: { formation, team },
+    addPlayerToFormation,
+  } = useContext(TeamContext);
+
   const [selection, setSelection] = useState(true);
-  const [state, dispatch] = useReducer(reducer, {
-    defense: { left: null, middle: null, right: null },
-    midfield: { left: null, middle: null, right: null },
-    attack: { left: null, middle: null, right: null },
-  });
   const gridRef = createRef();
   const refs = {
     defenseLeftRef: createRef(),
@@ -76,15 +63,15 @@ export default function TeamSheet({ team, cssClass }) {
         yPoint > positionY &&
         yPoint < rangeYend
       ) {
-        console.log('key', key);
-        let x = e.target.className.includes('player')
+        let element = e.target.className.includes('player')
           ? e.target
           : e.target.parentElement;
-        const payload = { position: key, id: x.id };
-        dispatch({
-          type: 'ADD_PLAYER',
-          payload,
-        });
+        const player = team.find(
+          (player) => player.id === parseInt(element.id)
+        );
+
+        const payload = { position: key, ...player };
+        addPlayerToFormation(payload);
       }
 
       // if (x) {
@@ -96,16 +83,18 @@ export default function TeamSheet({ team, cssClass }) {
     return 0;
   }
   function renderSheet() {
-    return team.map((p) => {
-      return (
-        <PlayerCard
-          handleMove={handleMove}
-          player={p}
-          cssClass={cssClass}
-          key={p.id}
-        />
-      );
-    });
+    return team
+      ? team.map((p) => {
+          return (
+            <PlayerCard
+              handleMove={handleMove}
+              player={p}
+              cssClass={cssClass}
+              key={p.id}
+            />
+          );
+        })
+      : null;
   }
   useEffect(() => {
     setRanges(makeRanges());
@@ -114,11 +103,10 @@ export default function TeamSheet({ team, cssClass }) {
 
   function submitTeam() {
     // if()
-    console.log(state);
+
     setSelection(false);
   }
 
-  console.log(state);
   if (selection) {
     return (
       <>
@@ -171,5 +159,5 @@ export default function TeamSheet({ team, cssClass }) {
       </>
     );
   }
-  return <Formation team={state} teamArr={team} />;
+  return <Play ground={ground} />;
 }
