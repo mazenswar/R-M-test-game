@@ -110,8 +110,10 @@ export default function TeamSheet({ ground }) {
   if (selection) {
     return (
       <section className={ground + '-team-container'}>
+      <div className="team-sheet-container">
         <div className="team-sheet">{renderSheet()}</div>
         <button onClick={submitTeam}>Submit Team</button>
+      </div>
         <div className="grid" ref={gridRef}>
           <div className="defense line">
             <div ref={refs.defenseLeftRef} className="defense-left position">

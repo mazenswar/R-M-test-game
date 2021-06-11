@@ -7,15 +7,34 @@
   width: 100vw;
   max-width: 100vw;
   max-height: 100vh;
-  .Home-team-container, .Home-team-play {
+  .Home-team-container {
     grid-column: 1;
     background-color: red;
+    display: grid;
+    grid-template-rows: 1fr 8fr;
+    .Home-team-controls {
+      grid-row: 1;
+    }
   }
-  .Away-team-container, .Away-team-play {
+  .Away-team-container {
     grid-column: 2;
     background-color: blue;
+    display: grid;
+    grid-template-rows: 1fr 8fr;
+    .Away-team-controls {
+      grid-row: 1;
+    }
   }
-
+  .formation {
+    grid-row: 2;
+  }
+  .team-sheet-container  { grid-row: 1;}
+  .grid { grid-row: 2}
+  .stat-bar { 
+    grid-row: 1;
+    display: flex;
+    justify-content: space-evenly;
+  }
 }
 
 .team {

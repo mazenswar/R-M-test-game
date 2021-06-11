@@ -7,7 +7,7 @@ export default function Play({ ground }) {
   const { gameOver } = useContext(GameContext);
   if (!gameOver) {
     return (
-      <section className={ground + '-team-play'}>
+      <section className={ground + '-team-container'}>
         <Controls ground={ground} />
         <Formation ground={ground} />;
       </section>

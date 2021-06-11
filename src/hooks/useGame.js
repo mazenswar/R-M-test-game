@@ -1,4 +1,4 @@
-import { useContext, useConext } from 'react';
+import { useContext } from 'react';
 import { Context as HomeTeamContext } from '../context/HomeTeamContext';
 import { Context as AwayTeamContext } from '../context/AwayTeamContext';
 import { Context as GameContext } from '../context/GameContext';
@@ -34,19 +34,17 @@ function useGame() {
   ] = useTeam(awayTeam, awayFormation);
 
   /// ATTACK FUNCTIONS
-  function attack(team) {
+  async function attack(team) {
     if (team === 'Home') {
-      let damage = (awaydefenseValue() - homeattackValue()) * 0.4;
-      if (Math.sign(damage) === -1) damage = damage * -1;
-      homeAttack(damage);
+      let damage = homeattackValue() * 0.15;
+      await homeAttack(damage);
       if (awayHealth < 0) {
         console.log('here');
         endGame('Home');
       }
     } else {
-      let damage = (homedefenseValue() - awayattackValue()) * 0.4;
-      if (Math.sign(damage) === -1) damage = damage * -1;
-      awayAttack(damage);
+      let damage = awayattackValue() * 0.15
+      await awayAttack(damage);
       if (homeHealth < 0) {
         endGame('Away');
       }
@@ -60,6 +58,8 @@ function useGame() {
     setHomeTeam(half);
     setAwayTeam(playerArr);
   }
+
+
 
   // fetch
   function fetchChars() {

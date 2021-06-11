@@ -7,28 +7,14 @@ import StatBar from '../components/StatBar';
 export default function Formation({ ground }) {
   const TeamContext = ground === 'Home' ? HomeTeamContext : AwayTeamContext;
   const {
-    state: { team, formation, health },
+    state: { formation },
   } = useContext(TeamContext);
-  const [defenseValue, attackValue, teamChemistry, formationValue] = useTeam(
-    team,
-    formation
-  );
-  const formationVal = formationValue(); // returns {}
-
   function renderDetails(player) {
     if (!!!player) return null;
     return player.name;
   }
-
   return (
-    <div className="formation">
-      <StatBar
-        health={health}
-        defenseValue={defenseValue}
-        attackValue={attackValue}
-        formationVal={formationVal}
-        teamChemistry={teamChemistry}
-      />
+   
       <div className="grid formation">
         <div className="defense line">
           <div className="defense-left position">
@@ -64,6 +50,5 @@ export default function Formation({ ground }) {
           </div>
         </div>
       </div>
-    </div>
   );
 }

@@ -9,20 +9,20 @@ export default function StatBar({
 }) {
   return (
     <div className="stat-bar">
-      <h1>Health: {health}</h1>
-      <h1>
+      <h4>Health: {health}</h4>
+      <h4>
         Formation =={'>'} {formationVal.defense} - {formationVal.midfield} -{' '}
         {formationVal.attack}
-      </h1>
-      <h1>
+      </h4>
+      <h4>
         Chemistry =={'>'} {teamChemistry()}
-      </h1>
-      <h1>
+      </h4>
+      <h4>
         Defense =={'>'} {defenseValue()}
-      </h1>
-      <h1>
+      </h4>
+      <h4>
         Attack =={'>'} {attackValue()}
-      </h1>
+      </h4>
     </div>
   );
 }
