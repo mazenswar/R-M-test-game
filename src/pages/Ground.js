@@ -12,9 +12,9 @@ export default function Ground() {
   }, []);
 
   return (
-    <div className="ground-div" >
+    <main className="ground-div" >
       <TeamSheet ground="Home"/>
       <TeamSheet ground="Away"/>
-    </div>
+    </main>
   );
 }

@@ -7,10 +7,15 @@
   width: 100vw;
   max-width: 100vw;
   max-height: 100vh;
-  .Home-team-container {
+  .Home-team-container, .Home-team-play {
     grid-column: 1;
     background-color: red;
   }
+  .Away-team-container, .Away-team-play {
+    grid-column: 2;
+    background-color: blue;
+  }
+
 }
 
 .team {
