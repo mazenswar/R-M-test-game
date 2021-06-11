@@ -5,6 +5,7 @@ import { Context as GameContext } from '../context/GameContext';
 import useTeam from './useTeam';
 import characters from '../testData';
 import makeAttributes from '../helpers/makeAttributes';
+import makeLevel from '../notes/playerCard';
 
 function useGame() {
   //imports
@@ -74,11 +75,12 @@ function useGame() {
     //     setHomeTeam(arr.splice(0, middle));
     //     setAwayTeam(arr);
     //   });
+    let charsWithAttr = characters.map(c => makeLevel(c))
     function makeTen() {
       let arr = [];
       while (arr.length !== 10) {
         let character =
-          characters[Math.floor(Math.random() * characters.length)];
+          charsWithAttr[Math.floor(Math.random() * charsWithAttr.length)];
         if (!arr.some((i) => i.id === character.id)) {
           const char = makeAttributes(character);
           arr.push(char);

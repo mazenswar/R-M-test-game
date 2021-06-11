@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import characters from '../testData';
 import PlayerCard from '../pages/PlayerCard';
 import makeLevel from '../notes/playerCard';
-
+import TeamSheet from './TeamSheet';
 export default function TestPage() {
+  const [players, setPlayers] = useState([])
   useEffect(() => {
-    const players = characters.map((c) => makeLevel(c));
-    console.table(players);
-    // console.log(makeLevel(characters[10]));
+    const playersArr = characters.map((c) => makeLevel(c));
+    setPlayers(playersArr)
   }, []);
   return (
     <div>
-      <h1>Hi</h1>
+      <TeamSheet ground='Home' />
+      <TeamSheet ground='Away' />
     </div>
   );
 }

@@ -109,7 +109,7 @@ export default function TeamSheet({ ground }) {
 
   if (selection) {
     return (
-      <>
+      <section className={ground + '-team-container'}>
         <div className="team-sheet">{renderSheet()}</div>
         <button onClick={submitTeam}>Submit Team</button>
         <div className="grid" ref={gridRef}>
@@ -156,7 +156,7 @@ export default function TeamSheet({ ground }) {
             </div>
           </div>
         </div>
-      </>
+      </section>
     );
   }
   return <Play ground={ground} />;
