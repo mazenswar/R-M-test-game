@@ -9,7 +9,7 @@ export default function TeamSheet({ ground }) {
   const cssClass = ground === 'Home' ? 'home-player' : 'away-player';
   const TeamContext = ground === 'Home' ? HomeTeamContext : AwayTeamContext;
   const {
-    state: { formation, team },
+    state: { formation, team, selectionPool },
     addPlayerToFormation,
   } = useContext(TeamContext);
   
@@ -69,7 +69,6 @@ export default function TeamSheet({ ground }) {
         const player = team.find(
           (player) => player.id === parseInt(element.id)
         );
-
         const payload = { position: key, ...player };
         addPlayerToFormation(payload);
       }

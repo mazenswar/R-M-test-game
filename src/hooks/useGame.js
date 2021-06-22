@@ -11,12 +11,12 @@ function useGame() {
   //imports
   const { endGame } = useContext(GameContext);
   const {
-    setHomeTeam,
+    setTeam: setHomeTeam,
     receiveDamage: awayAttack,
     state: { health: homeHealth, team: homeTeam, formation: homeFormation },
   } = useContext(HomeTeamContext);
   const {
-    setAwayTeam,
+    setTeam: setAwayTeam,
     receiveDamage: homeAttack,
     state: { health: awayHealth, team: awayTeam, formation: awayFormation },
   } = useContext(AwayTeamContext);
@@ -60,7 +60,9 @@ function useGame() {
     // setChoices
     // setHomeChoices(half)
     // setAwayChoices(playerArr)
-    //
+    ///////////////////////////////////
+    // setSelectionPool('Home', half);
+    // setSelectionPool('Away', playerArr);
     setHomeTeam(half);
     setAwayTeam(playerArr);
   }
