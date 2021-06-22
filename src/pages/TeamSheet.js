@@ -1,9 +1,9 @@
 import React, { useContext, createRef, useEffect, useState } from 'react';
-import Formation from './Formation';
 import PlayerCard from './PlayerCard';
 import { Context as HomeTeamContext } from '../context/HomeTeamContext';
 import { Context as AwayTeamContext } from '../context/AwayTeamContext';
 import Play from './Play';
+import useTeam from '../hooks/useTeam';
 
 export default function TeamSheet({ ground }) {
   const cssClass = ground === 'Home' ? 'home-player' : 'away-player';
@@ -12,7 +12,7 @@ export default function TeamSheet({ ground }) {
     state: { formation, team },
     addPlayerToFormation,
   } = useContext(TeamContext);
-
+  
   const [selection, setSelection] = useState(true);
   const gridRef = createRef();
   const refs = {
@@ -101,9 +101,9 @@ export default function TeamSheet({ ground }) {
     // makeRanges();
   }, []);
 
-  function submitTeam() {
+  async function submitTeam() {
     // if()
-
+    // generateValues
     setSelection(false);
   }
 

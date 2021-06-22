@@ -20,30 +20,32 @@ function useGame() {
     receiveDamage: homeAttack,
     state: { health: awayHealth, team: awayTeam, formation: awayFormation },
   } = useContext(AwayTeamContext);
-  const [
+  const {
     homedefenseValue,
     homeattackValue,
     hometeamChemistry,
-    homeformationValue,
-  ] = useTeam(homeTeam, homeFormation);
-  const [
+    homeformationValue
+   } = useTeam(homeTeam, homeFormation);
+  const {
     awaydefenseValue,
     awayattackValue,
     awayteamChemistry,
     awayformationValue,
-  ] = useTeam(awayTeam, awayFormation);
+   } = useTeam(awayTeam, awayFormation);
+
 
   /// ATTACK FUNCTIONS
   async function attack(team) {
+    const offest = 0.10;
     if (team === 'Home') {
-      let damage = homeattackValue() * 0.15;
+      let damage = homeattackValue() * offest;
       await homeAttack(damage);
       if (awayHealth < 0) {
         console.log('here');
         endGame('Home');
       }
     } else {
-      let damage = awayattackValue() * 0.15
+      let damage = awayattackValue() * offest
       await awayAttack(damage);
       if (homeHealth < 0) {
         endGame('Away');
@@ -55,6 +57,10 @@ function useGame() {
     const middle = Math.floor(playerArr.length / 2);
     // debugger;
     let half = playerArr.splice(0, middle);
+    // setChoices
+    // setHomeChoices(half)
+    // setAwayChoices(playerArr)
+    //
     setHomeTeam(half);
     setAwayTeam(playerArr);
   }

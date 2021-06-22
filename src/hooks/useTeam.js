@@ -1,18 +1,24 @@
 const useTeam = (teamArr, formationObj) => {
-  function formationValue() {
+  const formationValue = function() {
+    // This function returns the number of players in each line (defense,  midfield, attack)
     const formation = {
       defense: 0,
       midfield: 0,
       attack: 0,
     };
     let array = Object.entries(formationObj);
+    // array = [
+    //   ["defense", {left: val, middle: val, right: val}],
+    //   ["midfield", {left: val, middle: val, right: val}],
+    //   ["attack", {left: val, middle: val, right: val}]
+    //  ]
     array.forEach((arr) => {
       if (arr[1].left !== null) formation[arr[0]] += 1;
       if (arr[1].middle !== null) formation[arr[0]] += 1;
       if (arr[1].right !== null) formation[arr[0]] += 1;
     });
     return formation;
-  }
+  }();
   function teamChemistry() {
     // total charisma
     return (
@@ -22,27 +28,32 @@ const useTeam = (teamArr, formationObj) => {
 
   /// Attack
   function attackValue() {
-    const formation = formationValue();
+    
     const totalAttackValue = teamArr.reduce(
       (sum, player) => (sum += player.attack),
       0
     );
-    return (totalAttackValue * (formation.midfield + formation.attack)) / 10;
+    return (totalAttackValue * (formationValue.midfield + formationValue.attack)) / 10;
   }
   // Defense
   function defenseValue() {
-    const formation = formationValue();
+    
     const totalDefenseValue = teamArr.reduce(
       (sum, player) => (sum += player.defense),
       0
     );
-    if (formation.defense === 0) {
+    if (formationValue.defense === 0) {
       return 50;
     }
-    return (totalDefenseValue * (formation.defense + formation.midfield)) / 10;
+    return (totalDefenseValue * (formationValue.defense + formationValue.midfield)) / 10;
   }
 
-  return [defenseValue, attackValue, teamChemistry, formationValue];
+  
+  // HOOK RETURN
+  return {defenseValue, attackValue, teamChemistry, formationValue};
+  // return {
+    //defenseValue, attackValue, teamChemistry, formationValue
+  //}
 };
 
 export default useTeam;

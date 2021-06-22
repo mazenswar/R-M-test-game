@@ -7,8 +7,9 @@ function reducer(state, { type, payload }) {
     case 'ADD_PLAYER':
       return addPlayer();
     case 'DAMAGE':
-      console.log(payload);
       return { ...state, health: state.health - payload };
+    case 'SET_VALS':
+      return { ...state, ...payload };
     default:
       return state;
   }
@@ -38,14 +39,20 @@ const setAwayTeam = (dispatch) => (team) =>
 const receiveDamage = (dispatch) => (amount) => {
   dispatch({ type: 'DAMAGE', payload: amount });
 };
-const actions = { addPlayerToFormation, setAwayTeam, receiveDamage };
+const setValues = dispatch => values => dispatch({ type: 'SET_VALS', payload: values}) 
+const actions = { addPlayerToFormation, setAwayTeam, receiveDamage, setValues };
 const teamInitialState = {
+  selectionPool: [],
   team: [],
   formation: {
     defense: { left: null, middle: null, right: null },
     midfield: { left: null, middle: null, right: null },
     attack: { left: null, middle: null, right: null },
   },
+  attack: 0,
+  defense: 0,
+  chemistry: 0,
+  formationVal: {defense: 0, midfield: 0, attack: 0},
   health: 100,
 };
 
