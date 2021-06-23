@@ -15,15 +15,13 @@ function reducer(state, { type, payload }) {
     }
 }
 function addPlayer(state, payload) {
-    const arr = payload.position.split(/(?=[A-Z])/);
-    const line = arr[0];
-    const position = arr[1].toLocaleLowerCase();
+    const line = payload.position
     return {
         ...state,
         team: [...state.team, payload],
         formation: {
         ...state.formation,
-        [line]: { ...state.formation[line], [position]: payload },
+        [line]: [...state.formation[line], payload ],
         },
     };
 }
@@ -50,9 +48,9 @@ const teamInitialState = {
     selectionPool: [],
     team: [],
     formation: {
-        defense: { left: null, middle: null, right: null },
-        midfield: { left: null, middle: null, right: null },
-        attack: { left: null, middle: null, right: null },
+        defense: [],
+        midfield: [],
+        attack: [],
     },
     attack: 0,
     defense: 0,

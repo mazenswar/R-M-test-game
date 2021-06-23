@@ -18,7 +18,7 @@ export default function Controls({ ground }) {
   const [attack] = useGame();
 
   return (
-    <section className={ground + '-team-controls'}>
+    <section className={ground + '-team-controls team-controls'}>
       <StatBar 
         health={health}
         formationVal={formationVal}

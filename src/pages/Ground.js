@@ -2,19 +2,20 @@ import React, { useEffect } from 'react';
 import TeamSheet from './TeamSheet';
 import useGame from '../hooks/useGame';
 import '../styles/master.scss';
-import initGame from '../helpers/initGame';
-
+import useInitGame from '../hooks/useInitGame'
+import TestPage from './TestPage'
 export default function Ground() {
-  const [, , , fetchChars] = useGame();
+  const [init] = useInitGame()
 
   useEffect(() => {
-    fetchChars();
+    init();
   }, []);
 
   return (
     <main className="ground-div" >
-      <TeamSheet ground="Home"/>
-      <TeamSheet ground="Away"/>
+      <TestPage ground="Home"/>
+      
+      <TestPage ground="Away"/>
     </main>
   );
 }

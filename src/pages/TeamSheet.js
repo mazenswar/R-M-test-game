@@ -3,7 +3,6 @@ import PlayerCard from './PlayerCard';
 import { Context as HomeTeamContext } from '../context/HomeTeamContext';
 import { Context as AwayTeamContext } from '../context/AwayTeamContext';
 import Play from './Play';
-import useTeam from '../hooks/useTeam';
 
 export default function TeamSheet({ ground }) {
   const cssClass = ground === 'Home' ? 'home-player' : 'away-player';
@@ -63,33 +62,38 @@ export default function TeamSheet({ ground }) {
         yPoint > positionY &&
         yPoint < rangeYend
       ) {
+        
+        // PLAYER ALREADY IN POSITION ERROR
+        const arr = key.split(/(?=[A-Z])/);
+        const line = arr[0];
+        const position = arr[1].toLocaleLowerCase();
+        if(formation[line][position] !== null) {
+          alert('Error, player already in position, choose another place');
+          return false;
+        }
+        ///////////////////////////////////
         let element = e.target.className.includes('player')
           ? e.target
           : e.target.parentElement;
-        const player = team.find(
+        const player = selectionPool.find(
           (player) => player.id === parseInt(element.id)
         );
         const payload = { position: key, ...player };
         addPlayerToFormation(payload);
       }
-
-      // if (x) {
-
-      //   refs[x].current.innerHTML = '';
-      //   refs[x].current.appendChild(e.target);
-      // }
     }
     return 0;
   }
   function renderSheet() {
-    return team
-      ? team.map((p) => {
+    return selectionPool
+      ? selectionPool.map((p) => {
           return (
             <PlayerCard
               handleMove={handleMove}
               player={p}
               cssClass={cssClass}
               key={p.id}
+              ground={ground}
             />
           );
         })
@@ -108,7 +112,7 @@ export default function TeamSheet({ ground }) {
 
   if (selection) {
     return (
-      <section className={ground + '-team-container'}>
+      <section className={ground + '-team-container team-container'}>
       <div className="team-sheet-container">
         <div className="team-sheet">{renderSheet()}</div>
         <button onClick={submitTeam}>Submit Team</button>
