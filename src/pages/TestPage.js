@@ -32,11 +32,10 @@ export default function TeamSheet({ ground }) {
 
   ///////
   function handleMove(e, ui) {
-    debugger
     console.log(ground);
     let target = e.target.className.includes('player') ? e.target : e.target.parentElement;
-    const xPoint = ui.x;
-    const yPoint = ui.y;
+    const xPoint = target.getBoundingClientRect().x + ui.deltaX;
+    const yPoint = target.getBoundingClientRect().y + ui.deltaY;
     for (let key in ranges) {
       let positionX = ranges[key].x;
       let rangeXend = ranges[key].x + ranges[key].width;
@@ -64,6 +63,13 @@ export default function TeamSheet({ ground }) {
           console.log(`Error, ${key} is full, choose another position`);
           return false;
         }
+        /// PLAYER MOVED FROM LINE 
+        for (let key in formation) {
+          let player = formation[key].find(p => p.id === target.id);
+          // function removePlayer(id) {
+          //   dispatch({type: 'REMOVE_PLAYER', payload: player.id})
+          // }
+        }
         ///////////////////////////////////
         
         const player = selectionPool.find(
@@ -90,7 +96,7 @@ export default function TeamSheet({ ground }) {
       : null;
   }
   useEffect( () => {
-    const x = async () =>  await setRanges(makeRanges())();
+    setRanges(makeRanges())
   }, []);
 
   async function submitTeam() {

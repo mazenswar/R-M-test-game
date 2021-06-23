@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
+import useDrag from '../hooks/useDrag';
 
 export default function PlayerCard({ cssClass, player, handleMove }) {
-  // function onStop(e) {
-  //   // debugger;
-  //   return 0;
-  // }
   
+  //
   return (
     <Draggable onStop={handleMove} handle=".player-handle" bounds="body">
       <div className={`player-card ${cssClass} player player-handle`}   id={player.id}>
