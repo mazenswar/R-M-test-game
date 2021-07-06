@@ -39,7 +39,10 @@ export default function TestPageTwo() {
             }
         }
         // Check if line is full
-        if (formationCopy[line].length >= 3) return;
+        if (formationCopy[line].length >= 3) {
+            alert(`${line} is full, chose another line`);
+            return;
+        };
         // // Check if player is in another line and remove from that line
         // for (let key in formationCopy) {
         //     if (formationCopy[key].some(p => p === playerId)) {
