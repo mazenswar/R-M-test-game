@@ -2,11 +2,11 @@ import React from 'react'
 
 import DragPlayerCard from './DragPlayerCard';
 
-export default function DragDrop({selectedPlayers, addPlayer, line}) {
-    const color = line === 'defense' ? 'blue' : line === 'midfield' ? 'green' : 'red';
+export default function DragDrop({players, addPlayer, line}) {
+    const color = line === 'defense' ? 'blue' : line === 'midfield' ? 'green' : line === 'attack' ? 'red' : 'purple';
 
     function renderSelectionPlayers() {
-        return selectedPlayers.map(player => <DragPlayerCard player={player} key={'selected-' + player.id} />)
+        return players.map(player => <DragPlayerCard player={player} key={'selected-' + player.id} />)
     }
     
     function handleDragEnter(e) {
@@ -34,8 +34,8 @@ export default function DragDrop({selectedPlayers, addPlayer, line}) {
     return (
         <div 
         style={{
-            height: '20vh',
-            width: '100vw',
+            height: '25%',
+            width: '100%',
             backgroundColor: color,
             display: 'flex',
             justifyContent: 'space-evenly'
@@ -46,7 +46,7 @@ export default function DragDrop({selectedPlayers, addPlayer, line}) {
             onDragEnter={handleDragEnter}
             onDragLeave={handleDragLeave}
         >
-            {selectedPlayers.length ?  renderSelectionPlayers() : <p>Drag  {line} players here</p>}
+            {players.length ?  renderSelectionPlayers() : <p>Drag  {line} players here</p>}
         </div>
     )
 }

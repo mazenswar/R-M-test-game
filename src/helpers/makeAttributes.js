@@ -58,12 +58,29 @@ function generateDefenseValue(player) {
   return defense;
 }
 
+function attributes(player) {
+  let color = "bronze"
+  let attr = {
+    charisma: generateCharisma(player),
+    attack: generateAttackValue(player),
+    defense: generateDefenseValue(player)
+  }
+  const attrTotal =  attr["charisma"] + attr["attack"] + attr["defense"];
+  if(attrTotal > 250) color = "silver";
+  if (Object.keys(mainCharacters).some(p => p === player.name)) color = 'gold';
+  if(player.name === "Rick Sanchez") color = 'black';
+  if(player.name === "Jerry Smith") color = 'green';
+  return {
+    ...attr,
+    cardColor: color
+  };
+
+}
+
 function makeAttributes(player) {
   const attr = {
     ...player,
-    charisma: generateCharisma(player),
-    attack: generateAttackValue(player),
-    defense: generateDefenseValue(player),
+    ...attributes(player)
   };
 
   return attr;

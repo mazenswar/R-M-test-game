@@ -19,7 +19,4 @@ export default function App() {
   );
 }
 
-{
-  /* <Ground /> */
-}
 
