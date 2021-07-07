@@ -44,7 +44,6 @@ export default function makeLevel(player) {
     return data;
   }
   if (silver) {
-    console.log('here2');
     data.level = 'silver';
     const val =
       baseValue + (baseValue * 10) / 100 + randomNumberFromRange([1, 7]);

@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import DragDrop from '../components/DragDrop'
 import characters from '../testData';
-import makeAttributes from '../helpers/makeAttributes';
-import makeLevel from '../notes/playerCard';
+import makeLevel from '../helpers/makeLevel';
+import {Context as HomeTeamContext} from '../context/HomeTeamContext'
 
 
 export default function TestPageTwo() {
+    const {state, setTeam} = useContext(HomeTeamContext);
+    const [selectionMode, setSelectionMode] = useState(true);
     const arr = characters.slice(0, 10).map(p => makeLevel(p));
     const [selectionPool, setSelectionPool] = useState(arr);
     const [formation, setFormation] = useState({
@@ -13,7 +15,6 @@ export default function TestPageTwo() {
         midfield: [],
         attack: []
     })
-
     const [stats, setStats] = useState({
         teamFull: false,
         chemistry: 0,
@@ -30,7 +31,6 @@ export default function TestPageTwo() {
         for(let key in formation) {
             playerCount += formation[key].length;
             formation[key].forEach(p => {
-                console.log(p)
                 charisma += parseInt(p.charisma)
                 attack += parseInt(p.attack)
                 defense += parseInt(p.defense)
@@ -107,7 +107,13 @@ export default function TestPageTwo() {
         setSelectionPool(newSelectionPool);       
     }
 
-    return (
+    function confirmTeam() {
+        const data = {team: formation, stats}
+        setTeam(data);
+        setSelectionMode(false);
+    }
+    /////////////// RETURN /////////////////
+    return selectionMode ? (
         <div className="selection-div" style={style}>
             <div className="selection-formation" style={{ width: '80%', height: '100%'}}>
                 <DragDrop players={selectionPool} addPlayer={addPlayer} line="selection" />
@@ -119,8 +125,12 @@ export default function TestPageTwo() {
                 <p>Charisma: {stats.charisma}</p>
                 <p>Defense: {stats.defense}</p>
                 <p>Attack: {stats.attack}</p>
+                <button disabled={!stats.teamFull} onClick={confirmTeam}>Confirm Selection</button>
             </div>
         </div>
+    )
+    : (
+        <h1>PLAAAY</h1>
     )
 }
 

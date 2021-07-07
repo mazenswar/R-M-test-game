@@ -6,6 +6,7 @@ import { Provider as GameContext } from './context/GameContext';
 // import { Context as HomeTeamContext } from './context/HomeTeamContext';
 import './styles/master.scss';
 import TestPageTwo from './pages/TestPageTwo';
+import GenerateAwayTeam from './components/GenerateAwayTeam';
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
       <HomeTeamProvider>
         <AwayTeamProvider>
           <TestPageTwo />
+          <GenerateAwayTeam />
         </AwayTeamProvider>
       </HomeTeamProvider>
     </GameContext>
