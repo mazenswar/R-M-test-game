@@ -3,8 +3,12 @@ import useAwayTeam from '../hooks/useAwayTeam'
 import {Context as AwayTeamContext} from '../context/AwayTeamContext';
 import HomeTeamSelection from './HomeTeamSelection';
 import Play from './Play';
+import GameOver from './GameOver';
+import {Context as GameContext} from '../context/GameContext';
+
 
 export default function Home() {
+    const { state: {winner, gameOver} } = useContext(GameContext);
     // SET AWAY TEAM
     const {state, setTeam} = useContext(AwayTeamContext)
     const {formation, stats} = useAwayTeam();
@@ -13,7 +17,7 @@ export default function Home() {
     }, [formation, stats]);
     // SET SELECTION MODE
     const [selectionMode, setSelectionMode] = useState(true);
-
+    if(gameOver) return <GameOver winner={winner}/>
     return selectionMode ? (
         <HomeTeamSelection setSelectionMode={setSelectionMode}/>
     ) : <Play />
