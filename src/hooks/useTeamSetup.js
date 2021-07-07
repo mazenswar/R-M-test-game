@@ -15,6 +15,7 @@ export default function useTeamSetup() {
 
     function removePlayer(playerId) {
         playerId = parseInt(playerId)
+        if(selectionPool.find(p => p.id === playerId)) return;
         let playerToRemove;
         let playerLine;
         for (let pLine in formation) {

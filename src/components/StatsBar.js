@@ -1,8 +1,9 @@
 import React from 'react'
-
-export default function StatsBar({stats}) {
+import Controls from './Controls'
+export default function StatsBar({stats, ground}) {
     return (
-        <div>
+        <div className="statsbar">
+        {ground ? null : <Controls />}
             <p>Attack: {stats.attack}</p>
             <p> Defense: {stats.defense}</p>
         </div>

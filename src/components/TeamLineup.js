@@ -9,8 +9,8 @@ function TeamLineup({team, stats, ground}) {
         return team[line].length ? team[line].map(p => <img src={p.image} alt={p.name}/>) : null
     }
     return (
-        <>
-            <StatsBar stats={stats}/>
+        <div className="lineup-container">
+            <StatsBar stats={stats} ground={ground}/>
             <div className={cssClass}>
                 <div className="pbh-container">
                     <h1>Mr. Poopey Butthole</h1>
@@ -25,7 +25,7 @@ function TeamLineup({team, stats, ground}) {
                     {renderLine('attack')}
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

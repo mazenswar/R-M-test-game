@@ -2,19 +2,20 @@ import React, { useState, useContext } from 'react'
 import DragDrop from '../components/DragDrop'
 import {Context as HomeTeamContext} from '../context/HomeTeamContext'
 import useTeamSetup from '../hooks/useTeamSetup';
-import Play from './Play';
+import { Context as GameContext} from '../context/GameContext'
 
-export default function HomeTeamSelection() {
-    const {state, setTeam} = useContext(HomeTeamContext);
-    const [selectionMode, setSelectionMode] = useState(true);
+export default function HomeTeamSelection({setSelectionMode}) {
+    const {setTeam} = useContext(HomeTeamContext);
+    const { startGame } = useContext(GameContext)
     const { formation, stats, addPlayer, selectionPool } = useTeamSetup();
-    function confirmTeam() {
+    async function confirmTeam() {
         const data = {team: formation, stats}
-        setTeam(data);
+        await setTeam(data);
         setSelectionMode(false);
+        startGame();
     }
     /////////////// RETURN /////////////////
-    return selectionMode ? (
+    return  (
         <div className="selection-div" style={style}>
             <div className="selection-formation" style={{ width: '80%', height: '100%'}}>
                 <DragDrop players={selectionPool} addPlayer={addPlayer} line="selection" />
@@ -30,14 +31,11 @@ export default function HomeTeamSelection() {
             </div>
         </div>
     )
-    : (
-        <Play/>
-    )
 }
 
 const style = {
     display: 'flex',
-    height: '100vh',
-    width: '100vw',
+    height: '100%',
+    width: '100%',
 }
 

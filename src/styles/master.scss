@@ -1,155 +1,62 @@
 html, body, #root {
-  font-family: 'Courier New', Courier, monospace;
-}
-
-.ground-div {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  padding: 0;
+  margin: 0;
   height: 100vh;
   width: 100vw;
   max-width: 100vw;
   max-height: 100vh;
-  .team-container {
-    max-height: 100vh;
-    display: grid;
-    grid-template-rows: 1fr 8fr;
-    .team-controls {
-      grid-row: 1;
-    }
-  }
-  .Home-team-container {
-    grid-column: 1;
-    background-color: red;
-  }
-  .Away-team-container {
-    grid-column: 2;
-    background-color: blue;
-  }
-  .formation {
-    grid-row: 2;
-  }
-  .team-sheet-container  { 
-    grid-row: 1; 
-    .team-sheet {
-    //   background-color: green;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    // flex-direction: column;
-    grid-column: 2;
-    }
-  }
-  .grid { grid-row: 2}
-  .stat-bar { 
-    grid-row: 1;
-    display: flex;
-    justify-content: space-evenly;
-  }
+  font-family: 'Courier New', Courier, monospace;
+  overflow: hidden;
 }
 
-.team {
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-  height: 90%;
-  justify-self: center
-  //   .position {
-  //     // border: 1px solid red;
-  //     width: 33%;
-  //     height: 33%;
-  //   }
+p {
+  margin: 0;
 }
 
-.player-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  height: 100px;
-  width: 120px;
-  border: 1px solid purple;
-
-}
-
-.player-card  img {
-  width: 25%;
-  border-radius: 100%;
-}
-
-.home-player {
-  // border: 1px solid red;
-}
-.away-player {
-  // border: 1px solid blue;
-}
-#away-team-div {
-  // width: 100%;
-  // display: grid;
-  // grid-template-columns: 3fr 1fr;
-}
-#home-team-div {
-  // width: 100%;
-  // display: grid;
-  // grid-template-columns: 3fr 1fr;
-}
-
-
-.grid {
-  grid-column: 1;
-  grid-row: 1;
-  display: flex;
-  flex-direction: column;
-  //   align-items: stretch;
-  background-color: green;
+#play-container {
+  background-color: purple;
+  height: 100%;
   width: 100%;
-  height: 700px;
-  .line {
+  display: flex;
+}
+
+.lineup-container{
+  height: 100%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  .lineup {
     display: flex;
-    justify-content: space-evenly;
-    height: 33.3%;
-    width: 1fr;
-    border: 1px solid red;
-    .position {
-      border: 1px solid purple;
-      flex: 1;
+    height: 80%;
+    width: 100%;
+  }
+  .away-lineup { flex-direction: row-reverse;}
+  .statsbar {
+    height: 20%;
+    width: 100%;
+  }
+
+  
+  .pbh-container {
+      background-color: #262626;
+      width: 10%;
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
       align-items: center;
-    }
   }
-  // D
-  .defense {
-    background-color: #33B5FF;
+  .line {
+      width: 30%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      img {
+          width: 30%;
+          border-radius: 100%;
+      }
   }
-  // Mid
-  .midfield {
-    background-color: #16D31C;
-  }
-  //Att
-  .attack {
-    background-color: #F05959;
-  }
-}
+  .defense-line { background-color: blue;}
+  .midfield-line {background-color: green;}
+  .attack-line {background-color: red;}
 
-// <div>
-//       <div className="team-sheet">{renderSheet()}</div>
-//       <div className="grid">
-//         <div className="defense">
-//           <div className="defense-left"></div>
-//           <div className="defense-middle"></div>
-//           <div className="defense-right"></div>
-//         </div>
-//         <div className="midfield">
-//           <div className="midfield-left"></div>
-//           <div className="midfield-middle"></div>
-//           <div className="midfield-right"></div>
-//         </div>
-//         <div className="attack">
-//           <div className="attack-left"></div>
-//           <div className="attack-middle"></div>
-//           <div className="attack-right"></div>
-//         </div>
-//       </div>
-//     </div>
+}
