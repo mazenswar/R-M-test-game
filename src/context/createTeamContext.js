@@ -10,6 +10,11 @@ function reducer(state, {type, payload}) {
         case 'LONGSHOT':
             const newDefenseVal = Math.floor(state.stats.defense - (state.stats.defense * 40 / 100));
             return {...state, stats: {...state.stats, defense: newDefenseVal }}
+        case 'CRIPPLE':
+            const newAttackValue = state.stats.attack - Math.floor(Math.random() * 50);
+            return {...state, stats: {...state.stats, attack: newAttackValue}}
+        case 'MOVE':
+            return {...state, moves: [...state.moves, payload]}
         default:
             return state;
     }
@@ -30,9 +35,17 @@ const receiveLongShot = dispatch => () => {
     dispatch({type: 'LONGSHOT'})
 }
 
+const crippledOffense = dispatch => () => {
+    dispatch({type: 'CRIPPLE'})
+}
+
 
 const setTeam = dispatch => data => {
     dispatch({type: 'SET_TEAM', payload: data});
+}
+
+const addMove = dispatch => data => {
+    dispatch({type: "MOVE", payload: data})
 }
 
 
@@ -40,11 +53,14 @@ const actions = {
     setTeam,
     receiveDamage,
     fortifyDefense,
-    receiveLongShot
+    receiveLongShot,
+    addMove,
+    crippledOffense
 }
 const initialState = {
     team: { defense: [], midfield: [], attack: []},
-    stats: { attack: 0, defense: 0, chemistry: 0}
+    stats: { attack: 0, defense: 0, chemistry: 0},
+    moves: []
 }
 
 

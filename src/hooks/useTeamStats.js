@@ -36,10 +36,23 @@ export default function useTeamStats(formation) {
                 defense += parseInt(p.defense)
             })
         }
-        const teamFull = playerCount === 6;
+        const teamFull = playerCount === 5;
         const offestValues = {
             attack: Math.floor(attack * offest(formationTemp[2]) + attack * offest(formationTemp[1]) + (charisma * 0.01)),
             defense: Math.floor(defense * offest(formationTemp[0]) + defense * offest(formationTemp[1]) + (charisma * 0.01)),
+        }
+        // empty lines
+        if(formation.defense.length === 0){ offestValues["defense"] = offestValues.defense - 100 }
+        if(formation.midfield.length === 0){
+            offestValues["defense"] = offestValues.defense - 10
+            offestValues["attack"] = offestValues.defense - 10
+        }
+        if(formation.attack.length === 0){
+            offestValues["attack"] = offestValues.attack - 100
+        }
+        // start
+        for(let key in offestValues) {
+            offestValues[key] = offestValues[key] < 0 ? 0 : offestValues[key]
         }
         await setStats({
             teamFull,

@@ -16,11 +16,12 @@ export default function useAwayTeam() {
     console.log("STAAAAT => ", stats);
     const players = characters.slice(0,10).map(p => makeLevel(p));
     const formationTemplates = [
-        [2,2,2],
-        [3,2,1],
-        [2,3,1],
-        [3,1,2],
-        [2,1,3]
+        [2,2,1],
+        [1,2,2],
+        [2,1,2],
+        [1,1,3],
+        [3,1,1],
+        [1,3,1]
     ]
     
     function genRandNum(limit) {
@@ -29,7 +30,7 @@ export default function useAwayTeam() {
     async function placePlayers() {
         const chosenFormation = formationTemplates[genRandNum(formationTemplates.length)];
         let blankFormation = {defense: [], midfield: [], attack: []}
-        for(let i =0; i < 6; i++) {
+        for(let i =0; i < 5; i++) {
             let rand = genRandNum(players.length);
             let player = players.splice(rand, 1)[0];
             if(blankFormation.defense.length < chosenFormation[0]) {

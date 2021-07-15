@@ -5,15 +5,32 @@ import {Context as GameContext} from '../context/GameContext';
 
 function useControls() {
     const {changeTurn} = useContext(GameContext);
+    const { 
+        state: {stats: awayStats},
+        receiveDamage: awayReceiveDamage, 
+        receiveLongShot: awayReceiveLongShot, 
+        fortifyDefense: awayFortifyDefense,
+        crippledOffense: awayCrippledOffense,
+        addMove: addAwayMove 
+    } = useContext(AwayTeamContext);
+
+    const {
+        state: {stats}, 
+        fortifyDefense,
+        receiveDamage,
+        receiveLongShot,
+        crippledOffense,
+        addMove
+    } = useContext(HomeTeamContext);
 
     async function awayMove() {
-        
         setTimeout(() => {
             const num = Math.floor(Math.random() * 20);
             if(num < 10) {
                 // ATTACK
                 const damage = awayStats.attack * 0.05;
                 receiveDamage(damage);
+                addAwayMove({type: 'Attack'})
                 alert('AWAY TEAM ATTACKED')
             }
 
@@ -28,37 +45,34 @@ function useControls() {
                 if (shotMade) {
                     alert('LOOOONG SHOT')
                     receiveLongShot()
-                };
-                alert('AWAY TEAM ATTEMPTED LONG SHOT')
+                    addAwayMove({type: 'Successful Longshot'})
+                } else {
+                    alert('AWAY TEAM ATTEMPTED LONG SHOT')
+                    addAwayMove({type: 'unsuccessful Longshot'})
+                }
 
             }
 
-            if(num > 12) {
+            if(num > 12 && num < 16) {
                 // FORTIFTY DEFENSE
                 awayFortifyDefense();
-                alert('AWAY TEAM FORTIFIED DEFENSE')
+                alert('AWAY TEAM FORTIFIED DEFENSE');
+                addAwayMove({type: 'Fortified defense'});
+            }
+            if(num >= 16) {
+                crippledOffense();
+                alert('AWAY TEAM CRIPPLED HOME ATTACK');
+                addAwayMove({type: "Crippled Opponent's attack"});
             } 
             changeTurn();
         }, 1000);
     }
 
-    const { 
-        state: {stats: awayStats},
-        receiveDamage: awayReceiveDamage, 
-        receiveLongShot: awayReceiveLongShot, 
-        fortifyDefense: awayFortifyDefense 
-    } = useContext(AwayTeamContext);
-
-    const {
-        state: {stats}, 
-        fortifyDefense,
-        receiveDamage,
-        receiveLongShot,
-    } = useContext(HomeTeamContext);
 
     async function attack() {
         const damage = stats.attack * 0.05;
         awayReceiveDamage(damage);
+        addMove({type: `Attack with ${damage} damage`});
         await changeTurn();
         // AWAY TURN
         awayMove();
@@ -78,23 +92,35 @@ function useControls() {
         const shotMade = rand === magicNum ? true : false;
         // if shot made: receiving team defense value = current defense value - (defenseValue * 30 /100);
         // else do nothing
+        
         if (shotMade) {
             alert('LOOOONG SHOT')
             awayReceiveLongShot()
-        };
-        await changeTurn();
-        // AWAY TURN
-        awayMove();
+            addMove({type: 'Successful Longshot'})
+        } else {
+            addMove({type: 'Unsuccessful Longshot'})
+            await changeTurn();
+            // AWAY TURN
+            awayMove();
+        }
     }
 
     async function fortifyHomeDefense() {
         fortifyDefense();
+        addMove({type: 'Fortified defense'});
         await changeTurn();
         // AWAY TURN
         awayMove();
     }
+    
+    async function crippleOffense() {
+        awayCrippledOffense();
+        addMove({type: "Crippled opponent's attack"});
+        await changeTurn();
+        awayMove()
+    }
 
-    return {attack, fortifyHomeDefense, longShot}
+    return {attack, fortifyHomeDefense, longShot, crippleOffense}
 }
 
 export default useControls;

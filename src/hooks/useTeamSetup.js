@@ -38,8 +38,13 @@ export default function useTeamSetup() {
             removePlayer(playerId);
             return;
         };
-        // debugger;
+        // Check if line is full
         const formationCopy = {...formation};
+        if (formationCopy[line].length >= 3) {
+            alert(`${line} is full, chose another line`);
+            return;
+        };
+        // debugger;
         playerId = parseInt(playerId);
         let player = selectionPool.find(p => p.id === playerId);
         // Move player from one line to another line
@@ -55,11 +60,6 @@ export default function useTeamSetup() {
                 };
             }
         }
-        // Check if line is full
-        if (formationCopy[line].length >= 3) {
-            alert(`${line} is full, chose another line`);
-            return;
-        };
         // Check if max number of players is selected
         if(stats.teamFull) {
             alert('team is full, you are allowed a maximum of 6 players');

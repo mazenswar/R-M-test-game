@@ -3,14 +3,14 @@ import StatsBar from './StatsBar';
 import '../styles/lineup.scss'
 
 
-function TeamLineup({team, stats, ground}) {
+function TeamLineup({moves, team, stats, ground}) {
     const cssClass = ground === "away" ? "lineup away-lineup" : "lineup";
     function renderLine(line) {
         return team[line].length ? team[line].map(p => <img src={p.image} alt={p.name}/>) : null
     }
     return (
         <div className="lineup-container">
-            <StatsBar stats={stats} ground={ground}/>
+            <StatsBar moves={moves} stats={stats} ground={ground}/>
             <div className={cssClass}>
                 <div className="pbh-container">
                     <h1>Mr. Poopey Butthole</h1>

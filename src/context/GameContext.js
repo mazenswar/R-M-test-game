@@ -33,7 +33,8 @@ const initialState = {
   gameOver: false,
   winner: null,
   playerTurn: true,
-  gameStarted: false
+  gameStarted: false,
+  difficulty: 1
 };
 
 export const { Context, Provider } = createDataContext(

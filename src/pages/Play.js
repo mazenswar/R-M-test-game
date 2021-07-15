@@ -23,8 +23,8 @@ export default function Play() {
     }, [homeState.stats, awayState.stats])
     return (
         <div id="play-container">
-            <TeamLineup stats={homeState.stats}team={homeState.team} />
-            <TeamLineup stats={awayState.stats}team={awayState.team} ground="away"/>
+            <TeamLineup moves={homeState.moves} stats={homeState.stats}team={homeState.team} />
+            <TeamLineup moves={awayState.moves} stats={awayState.stats}team={awayState.team} ground="away"/>
         </div>
     )
 }
