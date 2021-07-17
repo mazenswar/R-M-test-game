@@ -11,7 +11,7 @@ export default function Controls({ground}) {
     // X = Take out player
     
     return (
-        <div>
+        <div id="controls-container">
             <button disabled={!playerTurn} onClick={attack}>Attack</button>
             <button disabled={!playerTurn} onClick={fortifyHomeDefense}>Fortify Defense</button>
             <button disabled={!playerTurn} onClick={longShot}>Longshot</button>

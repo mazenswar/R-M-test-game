@@ -24,7 +24,7 @@ function useControls() {
     } = useContext(HomeTeamContext);
 
     async function awayMove() {
-        setTimeout(() => {
+        setTimeout(async () => {
             const num = Math.floor(Math.random() * 20);
             if(num < 10) {
                 // ATTACK
@@ -64,8 +64,8 @@ function useControls() {
                 alert('AWAY TEAM CRIPPLED HOME ATTACK');
                 addAwayMove({type: "Crippled Opponent's attack"});
             } 
-            changeTurn();
-        }, 1000);
+            await changeTurn();
+        }, 700);
     }
 
 

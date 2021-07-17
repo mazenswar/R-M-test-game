@@ -3,7 +3,7 @@ function reducer(state, {type, payload}) {
         case 'SET_TEAM':
             return {...state, team: payload.team, stats: payload.stats};
         case 'RECEIVE_DAMAGE':
-            return {...state, stats: {...state.stats, defense: state.stats.defense - payload}}
+            return {...state, stats: {...state.stats, defense: Math.floor(state.stats.defense - payload)}}
         case 'FORTIFY':
             const newDefenseValue = Math.floor(state.stats.defense + state.stats.defense * 0.03);
             return {...state, stats: {...state.stats, defense: newDefenseValue }}

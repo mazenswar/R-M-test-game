@@ -3,7 +3,7 @@ import React from 'react'
 import DragPlayerCard from './DragPlayerCard';
 
 export default function DragDrop({players, addPlayer, line}) {
-    const color = line === 'defense' ? 'blue' : line === 'midfield' ? 'green' : line === 'attack' ? 'red' : 'purple';
+    
 
     function renderSelectionPlayers() {
         return players.map(player => <DragPlayerCard player={player} key={'selected-' + player.id} />)
@@ -32,15 +32,8 @@ export default function DragDrop({players, addPlayer, line}) {
         addPlayer(line, playerId)
     };
     return (
-        <div 
-        style={{
-            height: '25%',
-            width: '100%',
-            backgroundColor: color,
-            display: 'flex',
-            justifyContent: 'space-evenly'
-        }}
-            className={'drag-drop-zone'}
+        <div
+            className={`drag-drop-zone dd-${line}`}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             onDragEnter={handleDragEnter}

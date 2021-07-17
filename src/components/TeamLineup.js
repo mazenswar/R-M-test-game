@@ -13,7 +13,7 @@ function TeamLineup({moves, team, stats, ground}) {
             <StatsBar moves={moves} stats={stats} ground={ground}/>
             <div className={cssClass}>
                 <div className="pbh-container">
-                    <h1>Mr. Poopey Butthole</h1>
+                    <img src="pbb.png" alt="mr.poopybutthole" style={ ground === 'away' ? {transform: 'scaleX(-1)'} : null} />
                 </div>
                 <div className="defense-line line">
                     {renderLine('defense')}

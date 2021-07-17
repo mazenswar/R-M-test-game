@@ -3,7 +3,7 @@ import { Provider as HomeTeamProvider } from './context/HomeTeamContext';
 import { Provider as AwayTeamProvider } from './context/AwayTeamContext';
 import { Provider as GameContext } from './context/GameContext';
 import './styles/master.scss';
-import Home from './pages/Home';
+import Intro from './pages/Intro';
 
 
 export default function App() {
@@ -11,7 +11,7 @@ export default function App() {
     <GameContext>
       <HomeTeamProvider>
         <AwayTeamProvider>
-          <Home/>
+          <Intro/>
         </AwayTeamProvider>
       </HomeTeamProvider>
     </GameContext>

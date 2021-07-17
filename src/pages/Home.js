@@ -1,24 +1,38 @@
 import React, { useContext, useEffect, useState } from 'react'
 import useAwayTeam from '../hooks/useAwayTeam'
-import {Context as AwayTeamContext} from '../context/AwayTeamContext';
 import HomeTeamSelection from './HomeTeamSelection';
 import Play from './Play';
 import GameOver from './GameOver';
 import {Context as GameContext} from '../context/GameContext';
+import {Context as HomeContext } from '../context/HomeTeamContext';
+import {Context as AwayTeamContext} from '../context/AwayTeamContext';
 
 
 export default function Home() {
-    const { state: {winner, gameOver} } = useContext(GameContext);
+    const { state: {winner, gameOver, gameStarted}, endGame } = useContext(GameContext);
     // SET AWAY TEAM
-    const {state, setTeam} = useContext(AwayTeamContext)
-    const {formation, stats} = useAwayTeam();
-    useEffect(() => {
-        setTeam({team: formation, stats});
-    }, [formation, stats]);
+    const {state: awayState, setTeam} = useContext(AwayTeamContext)
+    const {state: homeState} = useContext(HomeContext)
+    useEffect( () => {
+        (async () => {
+            if(gameStarted) {
+            if (homeState.stats.defense < 0) {
+                await endGame('Away')
+                alert('Game Over')
+            };
+            if (awayState.stats.defense < 0) {
+                await endGame('Home')
+                alert('Game Over')
+            };
+        }})();
+        }, [homeState.stats, awayState.stats])
+
     // SET SELECTION MODE
     const [selectionMode, setSelectionMode] = useState(true);
-    if(gameOver) return <GameOver winner={winner}/>
+    if(gameOver) return <GameOver winner={winner}/>;
     return selectionMode ? (
         <HomeTeamSelection setSelectionMode={setSelectionMode}/>
     ) : <Play />
 }
+
+

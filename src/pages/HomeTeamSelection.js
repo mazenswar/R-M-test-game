@@ -28,6 +28,12 @@ export default function HomeTeamSelection({setSelectionMode}) {
                 <p>Defense: {stats.defense}</p>
                 <p>Attack: {stats.attack}</p>
                 <button disabled={!stats.teamFull} onClick={confirmTeam}>Confirm Selection</button>
+                <p>
+                    You can drag characters and put them in any of the three lines (defense, midfield, attack)
+                </p>
+                <p>
+                    You can move characters between lines or drag them back to the selection pool if you want to choose another character instead
+                </p>
             </div>
         </div>
     )
