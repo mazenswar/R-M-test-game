@@ -1,10 +1,14 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import {Context as HomeTeamContext} from '../context/HomeTeamContext';
 import {Context as AwayTeamContext} from '../context/AwayTeamContext';
-import {Context as GameContext} from '../context/GameContext';
+import { Context as GameContext} from '../context/GameContext';
+
 
 function useControls() {
-    const {changeTurn} = useContext(GameContext);
+    const {state:{gameOver}} = useContext(GameContext)
+    const [playerTurn, setPlayerTurn] = useState(true);
+    //damagePercentage (damage / teamHealth) * 100 
+    // newHealth 
     const { 
         state: {stats: awayStats},
         receiveDamage: awayReceiveDamage, 
@@ -23,7 +27,8 @@ function useControls() {
         addMove
     } = useContext(HomeTeamContext);
 
-    async function awayMove() {
+    function awayMove() {
+        if (gameOver) return;
         setTimeout(async () => {
             const num = Math.floor(Math.random() * 20);
             if(num < 10) {
@@ -64,16 +69,16 @@ function useControls() {
                 alert('AWAY TEAM CRIPPLED HOME ATTACK');
                 addAwayMove({type: "Crippled Opponent's attack"});
             } 
-            await changeTurn();
+            setPlayerTurn(true);
         }, 700);
     }
 
 
-    async function attack() {
+    function attack() {
         const damage = stats.attack * 0.05;
         awayReceiveDamage(damage);
         addMove({type: `Attack with ${damage} damage`});
-        await changeTurn();
+        setPlayerTurn(!playerTurn);
         // AWAY TURN
         awayMove();
     }
@@ -85,7 +90,7 @@ function useControls() {
     // }
     
     
-    async function longShot() {
+    function longShot() {
         const magicNum = 7;
         const randRange = 15;
         let rand = Math.floor(Math.random() * randRange);
@@ -97,9 +102,10 @@ function useControls() {
             alert('LOOOONG SHOT')
             awayReceiveLongShot()
             addMove({type: 'Successful Longshot'})
+            setPlayerTurn(!playerTurn)
         } else {
             addMove({type: 'Unsuccessful Longshot'})
-            await changeTurn();
+            setPlayerTurn(!playerTurn);
             // AWAY TURN
             awayMove();
         }
@@ -108,7 +114,7 @@ function useControls() {
     async function fortifyHomeDefense() {
         fortifyDefense();
         addMove({type: 'Fortified defense'});
-        await changeTurn();
+        setPlayerTurn(!playerTurn);
         // AWAY TURN
         awayMove();
     }
@@ -116,11 +122,11 @@ function useControls() {
     async function crippleOffense() {
         awayCrippledOffense();
         addMove({type: "Crippled opponent's attack"});
-        await changeTurn();
-        awayMove()
+        setPlayerTurn(!playerTurn);
+        awayMove();
     }
 
-    return {attack, fortifyHomeDefense, longShot, crippleOffense}
+    return {attack, fortifyHomeDefense, longShot, crippleOffense, playerTurn}
 }
 
 export default useControls;

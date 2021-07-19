@@ -13,23 +13,10 @@ export default function Home() {
     // SET AWAY TEAM
     const {state: awayState, setTeam} = useContext(AwayTeamContext)
     const {state: homeState} = useContext(HomeContext)
-    useEffect( () => {
-        (async () => {
-            if(gameStarted) {
-            if (homeState.stats.defense < 0) {
-                await endGame('Away')
-                alert('Game Over')
-            };
-            if (awayState.stats.defense < 0) {
-                await endGame('Home')
-                alert('Game Over')
-            };
-        }})();
-        }, [homeState.stats, awayState.stats])
 
     // SET SELECTION MODE
     const [selectionMode, setSelectionMode] = useState(true);
-    if(gameOver) return <GameOver winner={winner}/>;
+    if(gameOver) return <GameOver winner={winner} winnerState={winner === "home" ? homeState : awayState}/>;
     return selectionMode ? (
         <HomeTeamSelection setSelectionMode={setSelectionMode}/>
     ) : <Play />
