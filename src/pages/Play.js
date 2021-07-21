@@ -6,10 +6,10 @@ import useAwayTeam from '../hooks/useAwayTeam';
 
 export default function Play() {
     const {state: homeState} = useContext(HomeTeamContext)
-    const {state: awayState, setTeam} = useContext(AwayTeamContext)
+    const {state: awayState, setTeam: setAwayTeam} = useContext(AwayTeamContext)
     const {formation, stats} = useAwayTeam();
     useEffect(() => {
-        setTeam({team: formation, stats});
+        setAwayTeam({team: formation, stats});
     }, [formation, stats]);
     return (
         <div id="play-container">

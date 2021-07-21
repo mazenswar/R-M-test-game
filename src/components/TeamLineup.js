@@ -6,7 +6,7 @@ import '../styles/lineup.scss'
 function TeamLineup({moves, team, stats, ground}) {
     const cssClass = ground === "away" ? "lineup away-lineup" : "lineup";
     function renderLine(line) {
-        return team[line].length ? team[line].map(p => <img src={p.image} alt={p.name}/>) : null
+        return team[line].length ? team[line].map(p => <img key={`${ground}-${p.image}`} src={p.image} alt={p.name}/>) : null
     }
     return (
         <div className="lineup-container">
